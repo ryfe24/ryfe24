@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryption and Decryption Kelompok</title>
+</head>
+<body>
+    <h1>Encryption and Decryption Kelompok Kece</h1>
+
+    <h2>Encryption</h2>
+    <form>
+        <label for="plain-text">Enter a message to encrypt:</label>
+        <input type="text" name="plain-text" id="plain-text" required>
+        <label for="encryption-key">Enter an encryption key (0-255):</label>
+        <input type="number" name="encryption-key" id="encryption-key" min="0" max="255" required>
+        <button type="button" onclick="encrypt()">Encrypt</button>
+    </form>
+
+    <h2>Decryption</h2>
+    <form>
+        <label for="cipher-text">Enter a message to decrypt:</label>
+        <input type="text" name="cipher-text" id="cipher-text" required>
+        <label for="decryption-key">Enter a decryption key (0-255):</label>
+        <input type="number" name="decryption-key" id="decryption-key" min="0" max="255" required>
+        <button type="button" onclick="decrypt()">Decrypt</button>
+    </form>
+
+    <h2>Results</h2>
+    <div id="results">
+        <p>Original message: <span id="original-message"></span></p>
+        <p>Encrypted/Decrypted message: <span id="result-message"></span></p>
+    </div>
+
+    <script>
+        function updateResults(original, result) {
+            document.getElementById("original-message").textContent = original;
+            document.getElementById("result-message").textContent = result;
+        }
+
+        function encrypt() {
+            var plainText = document.getElementById("plain-text").value;
+            var key = parseInt(document.getElementById("encryption-key").value);
+
+            var encryptedText = "";
+
+            for (var i = 0; i < plainText.length; i++) {
+                var charCode = plainText.charCodeAt(i);
+                encryptedText += String.fromCharCode((charCode + key) % 256);
+            }
+
+            updateResults(plainText, encryptedText);
+        }
+
+        function decrypt() {
+            var cipherText = document.getElementById("cipher-text").value;
+            var key = parseInt(document.getElementById("decryption-key").value);
+
+            var decryptedText = "";
+
+            for (var i = 0; i < cipherText.length; i++) {
+                var charCode = cipherText.charCodeAt(i);
+                decryptedText += String.fromCharCode((charCode - key + 256) % 256);
+            }
+
+            updateResults(cipherText, decryptedText);
+        }
+    </script>
+</body>
+</html>
